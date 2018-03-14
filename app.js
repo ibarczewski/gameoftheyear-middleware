@@ -12,7 +12,7 @@ app.get('/', (req, res) => res.send('Hello World!'))
 app.post('/ballots', function(req, res) {
     console.log(req.body.ballot);
     
-    firebase.database().ref('ballots/1').set(req.body.ballot);
+    firebase.database().ref('ballots/').set({[req.body.userId]: req.body.ballot});
     
     res.send('tanks');
 
@@ -31,7 +31,7 @@ app.get('/games', function(req, res) {
         console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
         console.log('body:', JSON.parse(body).results); // Print the HTML for the Google homepage.
         var parsedResults = _.map(JSON.parse(body).results, function(result) {
-            return { label: result.name, icon: result.image.tiny_url };
+            return { label: result.name, icon: result.image.small_url };
         });
         res.send(JSON.stringify(parsedResults));
     });
